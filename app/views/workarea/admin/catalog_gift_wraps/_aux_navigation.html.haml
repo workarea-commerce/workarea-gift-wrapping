@@ -1,0 +1,7 @@
+.grid.grid--auto.grid--right.grid--middle
+  .grid__cell
+    - if @pricing.present?
+      = link_to t('workarea.admin.catalog_gift_wraps.edit.view_pricing'), pricing_sku_path(@pricing)
+    - else
+      = link_to t('workarea.admin.catalog_gift_wraps.edit.create_pricing'), new_pricing_sku_path('sku[id]' => model.sku)
+  = append_partials('admin.catalog_gift_wrap_aux_navigation', model: model)

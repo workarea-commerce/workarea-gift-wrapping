@@ -1,0 +1,7 @@
+- if shipping.gift_message.present?
+  .grid__cell
+    .box
+      .box__header
+        %h3.box__heading= t('workarea.storefront.checkouts.gift_message')
+      .box__body
+        %p= shipping.gift_message

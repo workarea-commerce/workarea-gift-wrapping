@@ -1,0 +1,8 @@
+- if shipping.gift_message.present?
+  %tr
+    %td{ valign: "top" }
+      %h2{ style: "margin: 0 0 6px; font: bold 14px arial; color: #{@config.text_color};" }
+        = t('workarea.storefront.checkouts.gift_message')
+
+      %p{ style: "margin: 0 0 6px; font: 13px/1.5 arial; color: #{@config.text_color};" }
+        = shipping.gift_message

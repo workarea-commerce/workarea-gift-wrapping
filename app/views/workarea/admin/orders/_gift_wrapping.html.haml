@@ -1,0 +1,4 @@
+- if item.gift_wrapped?
+  .gift-wrap
+    = t('workarea.admin.orders.attributes.gift_wrap')
+    = item.gift_wraps.map(&:name).to_sentence

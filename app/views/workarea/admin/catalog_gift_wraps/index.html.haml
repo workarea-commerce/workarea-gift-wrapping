@@ -1,0 +1,41 @@
+- @page_title = t('workarea.admin.catalog_gift_wraps.index.title')
+
+.view
+  .view__header
+    .grid.grid--middle.grid--center
+      .grid__cell.grid__cell--50
+        .view__heading
+          = link_to "↑ #{t('workarea.admin.catalog.dashboard_link')}", catalog_dashboards_path, class: 'view__dashboard-button'
+          %h1= t('workarea.admin.catalog_gift_wraps.index.title')
+
+  .view__container
+    
+    .browsing-controls
+      %p.browsing-controls__count{ data: { browsing_controls_count: @gift_wraps.count } }
+        = pluralize(@gift_wraps.count, t('workarea.admin.catalog_gift_wraps.name'))
+
+    - if @gift_wraps.any?
+      %table.index-table
+        %thead
+          %tr
+            %th.index-table__control-cell
+            %th= t('workarea.admin.fields.name')
+            %th= t('workarea.admin.fields.sku')
+            %th= t('workarea.admin.fields.updated_at')
+        %tbody
+          - @gift_wraps.each do |result|
+            %tr.index-table__row
+              %td.index-table__control-cell
+                .checkbox.hidden
+                  = check_box_tag 'global_id', result.to_global_id.to_param, false, class: 'checkbox__input', id: dom_id(result)
+                  = label_tag dom_id(result), t('workarea.admin.bulk_actions.add_summary_button'), class: 'checkbox__label'
+              %td= link_to result.name, edit_catalog_gift_wrap_path(result)
+              %td= result.sku
+              %td= local_time_ago(result.updated_at)
+
+      - if @gift_wraps.total_pages > 1
+        = render 'workarea/admin/shared/pagination', collection: @gift_wraps
+
+  .workflow-bar
+    .grid.grid--auto.grid--right
+      .grid__cell= link_to t('workarea.admin.catalog_gift_wraps.index.button'), new_catalog_gift_wrap_path, id: 'add_gift_wrap', class: 'workflow-bar__button workflow-bar__button--create'

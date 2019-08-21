@@ -1,0 +1,10 @@
+module Workarea
+  decorate Shipping, with: :gift_wrapping do
+    decorated do
+      field :gift_message, type: String
+
+      validates :gift_message,
+                length: { maximum: Workarea.config.gift_message_max_length }
+    end
+  end
+end

@@ -1,0 +1,3 @@
+<% if item.gift_wrapped? %>
+<%= "#{t('workarea.storefront.checkouts.item_gift_wrap')} #{item.gift_wraps.map(&:name).to_sentence}" %>
+<% end %>

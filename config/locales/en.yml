@@ -1,0 +1,42 @@
+en:
+  workarea:
+    admin:
+      catalog_products:
+        gift_wrapping_fields:
+          allow_gift_wrapping: Allow Gift Wrapping?
+      catalog_gift_wraps:
+        name: Gift Wrap
+        sku_note: SKU should correspond to pricing for this gift wrap.
+        index:
+          title: Gift Wrap
+          button: Add New Gift Wrap
+        new:
+          title: Add a Gift Wrap
+          button: Create Gift Wrap
+        edit:
+          title: Edit %{name} Gift Wrap
+          view_pricing: View Pricing
+          create_pricing: Create Pricing
+          button: Save Gift Wrap
+        flash_messages:
+          success: Gift wrap successfully saved.
+          error: There was a problem saving your gift wrap.
+          destroyed: Gift wrap has been deleted.
+      fields:
+        gift_message: Gift Message
+      orders:
+        attributes:
+          gift_wrap: Gift Wrap
+      shared:
+        primary_nav:
+          gift_wraps: Gift Wrap
+    storefront:
+      checkouts:
+        gift_message: Gift Message
+        gift_message_note: "%{length} Character Limit."
+        gift_wrapping: Gift Wrapping
+        gift_wrapping_unavailable: This item cannot be gift wrapped.
+        gift_wrapping_title: Gift wrapping for %{name}
+        item_gift_wrap: "Gift Wrap:"
+    gift_wrap:
+      price_adjustment: Gift Wrapping

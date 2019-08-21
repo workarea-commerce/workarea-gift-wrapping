@@ -1,0 +1,19 @@
+module Workarea
+  decorate Storefront::OrderItemViewModel,
+           Admin::OrderItemViewModel, with: :gift_wrapping do
+
+    def gift_wrap_id
+      gift_wraps.first.try(:id).to_s
+    end
+
+    def gift_wraps
+      @gift_wraps ||= gift_wraps_attributes.map do |attr|
+        Mongoid::Factory.from_db(Catalog::GiftWrap, attr)
+      end
+    end
+
+    def gift_wrapped?
+      gift_wrap_quantities.present?
+    end
+  end
+end

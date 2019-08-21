@@ -1,0 +1,5 @@
+- if item.gift_wrapped?
+  .gift-wrap
+    = t('workarea.storefront.checkouts.item_gift_wrap')
+    - item.gift_wraps.each do |gift_wrap|
+      #{gift_wrap.name} - #{link_to t('workarea.storefront.forms.edit'), checkout_shipping_path}

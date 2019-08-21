@@ -1,0 +1,9 @@
+module Workarea
+  decorate Pricing::Request, with: :gift_wrap do
+    private
+
+    def all_skus
+      super + order.items.flat_map(&:gift_wrap_skus)
+    end
+  end
+end

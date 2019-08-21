@@ -1,0 +1,57 @@
+module Workarea
+  decorate Checkout::Steps::Shipping, with: :gift_wrapping do
+    # Update the shipping step of checkout. This includes:
+    # * shipping service
+    # * gift message
+    # * gift wrapping
+    #
+    # A default shipping service will probably be set before getting
+    # to this point of the checkout.
+    #
+    # @param [Hash] params
+    # @option params [String] :shipping_service
+    # @option params [String] :gift_message
+    # @option params [String] :gift_wrapping
+    #
+    # @raise [Checkout::Steps::Shipping::NoAvailableShippingOption]
+    #
+    # @return [Boolean] whether the update succeeded
+    #
+    def update(params = {})
+      super
+      return true unless order.requires_shipping?
+
+      apply_gift_message(params)
+      update_gift_wrapping(params)
+      persist_update
+    end
+
+    private
+
+    def apply_gift_message(params)
+      return unless params[:gift_message].present?
+      shipping.gift_message = params[:gift_message]
+    end
+
+    def update_gift_wrapping(params)
+      return unless params[:gift_wrapping].present?
+
+      items = order.items.to_a
+      gift_wraps = Catalog::GiftWrap.all.to_a
+
+      items.each(&:reset_gift_wrapping)
+
+      params[:gift_wrapping].each do |item_id, options|
+        next unless options[:gift_wrap].present?
+
+        gift_wrap = gift_wraps.detect { |gw| gw.id.to_s == options[:gift_wrap] }
+        next unless gift_wrap.present?
+
+        item = items.detect { |item| item.id.to_s == item_id }
+        next unless item.present? && item.allow_gift_wrapping?
+
+        item.add_gift_wrap(gift_wrap.as_document, options[:quantity])
+      end
+    end
+  end
+end

@@ -1,0 +1,53 @@
+module Workarea
+  decorate Order::Item, with: :gift_wrapping do
+    decorated do
+      field :gift_wrap_quantities, type: Hash, default: {}
+      field :gift_wraps_attributes, type: Array, default: []
+    end
+
+    def allow_gift_wrapping?
+      !!product_attributes.with_indifferent_access[:allow_gift_wrapping]
+    end
+
+    # Adjusts gift_wrap_quantities whenever quantity changes
+    # NOTE: this would need to be modified when supporting multiple gift
+    # wrap options across the quantity of a single item.
+    #
+    # @param [Integer] quantity the new quantity
+    #
+    # @return [Integer]
+    #
+    def quantity=(quantity)
+      super.tap do
+        return unless quantity_changed? && gift_wrap_quantities.present?
+
+        gift_wrap_quantities.each_key do |sku|
+          gift_wrap_quantities[sku] = quantity
+        end
+      end
+    end
+
+    def gift_wrap_skus
+      gift_wrap_quantities.keys
+    end
+
+    def reset_gift_wrapping
+      self.gift_wrap_quantities = {}
+      self.gift_wraps_attributes = []
+    end
+
+    def add_gift_wrap(attributes, qty = nil)
+      sku = attributes['sku']
+
+      gift_wrap_quantities[sku] ||= 0
+      gift_wrap_quantities[sku] += (qty || quantity).to_i
+
+      if gift_wrap_quantities[sku] > quantity
+        gift_wrap_quantities[sku] = quantity
+      end
+
+      gift_wraps_attributes << attributes
+      gift_wraps_attributes.uniq! { |a| a['_id'] }
+    end
+  end
+end

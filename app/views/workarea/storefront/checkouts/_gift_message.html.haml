@@ -1,0 +1,10 @@
+.checkout-shipping__section
+  %h2.checkout-shipping__heading= t('workarea.storefront.checkouts.gift_message')
+  - field_name = step.shippings.many? ? "shippings[#{step.shipping.id}][gift_message]" : 'gift_message'
+
+  .property.property--responsive
+  = label_tag field_name, nil, class: 'property__name' do
+    %span.property__text= t('workarea.storefront.checkouts.gift_message')
+  .value
+    = text_area_tag field_name, step.gift_message, class: 'text-box text-box--multi-line', title: t('workarea.storefront.checkouts.gift_message'), maxlength: Workarea.config.gift_message_max_length, id: nil
+    %span.value__note= t('workarea.storefront.checkouts.gift_message_note', length: Workarea.config.gift_message_max_length)

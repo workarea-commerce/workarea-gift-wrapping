@@ -1,0 +1,38 @@
+- @page_title = t('workarea.admin.catalog_gift_wraps.edit.title', name: @gift_wrap.name)
+
+.view
+  .view__header
+    .grid
+      .grid__cell.grid__cell--25
+      .grid__cell.grid__cell--50
+        .view__heading
+          = link_to_index_for(@gift_wrap)
+          %h1= t('workarea.admin.catalog_gift_wraps.edit.title', name: @gift_wrap.name)
+      .grid__cell.grid__cell--25
+        = render_aux_navigation_for(@gift_wrap)
+
+
+  .view__container
+    - if @gift_wrap.errors.present?
+      - @gift_wrap.errors.full_messages.each do |message|
+        = render_message 'error', message
+
+    = form_tag catalog_gift_wrap_path(@gift_wrap), method: :put, id: 'shipping_gift_wrap_form', data: { unsaved_changes: '' } do
+
+      .section
+
+        .property.property--required
+          = label_tag 'gift_wrap[name]', t('workarea.admin.fields.name'), class: 'property__name'
+          = text_field_tag 'gift_wrap[name]', @gift_wrap.name, class: 'text-box text-box--i18n', required: true
+
+        .property
+          = label_tag 'gift_wrap[sku]', t('workarea.admin.fields.sku'), class: 'property__name'
+          = text_field_tag "gift_wrap[sku]", @gift_wrap.sku, class: 'text-box', required: true
+          %span.property__note= t('workarea.admin.catalog_gift_wraps.sku_note')
+
+      .workflow-bar
+        .grid
+          .grid__cell.grid__cell--50
+            = link_to t('workarea.admin.actions.delete'), catalog_gift_wrap_path(@gift_wrap), class: 'workflow-bar__button workflow-bar__button--delete', data: { method: 'delete', confirm: t('workarea.admin.actions.delete_confirmation') }
+          .grid__cell.grid__cell--50
+            .align-right= button_tag t('workarea.admin.catalog_gift_wraps.edit.button'), value: 'create_gift_wrap', class: 'workflow-bar__button workflow-bar__button--create'

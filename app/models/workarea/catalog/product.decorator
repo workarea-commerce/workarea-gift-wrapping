@@ -1,0 +1,7 @@
+module Workarea
+  decorate Catalog::Product, with: :gift_wrapping do
+    decorated do
+      field :allow_gift_wrapping, type: Boolean, default: true
+    end
+  end
+end

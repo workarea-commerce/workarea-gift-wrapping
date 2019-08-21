@@ -1,0 +1,4 @@
+- if item.gift_wrapped?
+  %p{ style: "margin: 0 0 6px; font: 13px/1.5 arial; color: #{@config.text_color};" }
+    %strong= t('workarea.storefront.checkouts.item_gift_wrap')
+    = item.gift_wraps.map(&:name).to_sentence

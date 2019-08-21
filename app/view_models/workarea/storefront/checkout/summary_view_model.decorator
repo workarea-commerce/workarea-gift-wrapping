@@ -1,0 +1,11 @@
+module Workarea
+  decorate Storefront::Checkout::SummaryViewModel, with: :gift_wrapping do
+    # Whether to show order gift messages summary info.
+    #
+    # @return [Boolean]
+    #
+    def show_gift_message?
+      shippings.one? && shipping.gift_message.present?
+    end
+  end
+end

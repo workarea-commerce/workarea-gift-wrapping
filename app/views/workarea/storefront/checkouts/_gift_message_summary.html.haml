@@ -1,0 +1,4 @@
+- if shipping.gift_message?
+  .checkout-step-summary__section
+    %strong= t('workarea.storefront.checkouts.gift_message')
+    %p= shipping.gift_message
