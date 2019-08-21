@@ -34,15 +34,16 @@ desc "Release version #{Workarea::GiftWrapping::VERSION} of the gem"
 task :release do
   host = "https://#{ENV['BUNDLE_GEMS__WEBLINC__COM']}@gems.weblinc.com"
 
-  Rake::Task['workarea:changelog'].execute
-  system 'git add CHANGELOG.md'
-  system 'git commit -m "Update CHANGELOG"'
-  system 'git push origin HEAD'
+  #Rake::Task['workarea:changelog'].execute
+  #system 'git add CHANGELOG.md'
+  #system 'git commit -m "Update CHANGELOG"'
+  #system 'git push origin HEAD'
 
   system "git tag -a v#{Workarea::GiftWrapping::VERSION} -m 'Tagging #{Workarea::GiftWrapping::VERSION}'"
   system 'git push --tags'
 
   system 'gem build workarea-gift_wrapping.gemspec'
+  system "gem push workarea-gift_wrapping-#{Workarea::GiftWrapping::VERSION}.gem"
   system "gem push workarea-gift_wrapping-#{Workarea::GiftWrapping::VERSION}.gem --host #{host}"
   system "rm workarea-gift_wrapping-#{Workarea::GiftWrapping::VERSION}.gem"
 end
