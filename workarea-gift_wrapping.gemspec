@@ -17,5 +17,5 @@ Gem::Specification.new do |s|
 
   s.license = 'Business Software License'
 
-  s.add_dependency 'workarea', '~> 3.x', '>= 3.2.x'
+  s.add_dependency 'workarea', '~> 3.x', '>= 3.5.x'
 end
